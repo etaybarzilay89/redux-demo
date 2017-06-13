@@ -1,6 +1,7 @@
 import { createStore } from 'redux'
 import React from 'react'
 import { render } from 'react-dom'
+import { Provider, connect } from 'react-redux'
 
 const INC = 'inc'
 
@@ -19,19 +20,28 @@ const Increase = ({onIncrease}) =>
 const Display = ({count}) => 
   <div>{ count }</div>
 
-const App = ({ count, onIncrease }) => 
+const mapDispatchToIncreaseProps = dispatch => ({
+  onIncrease: () => dispatch(increase())
+})
+
+const mapStateToDisplayProps = state => ({
+  count: state.count
+})
+
+const SmartIncrease = connect(null, mapDispatchToIncreaseProps)(Increase)
+const SmartDisplay = connect(mapStateToDisplayProps)(Display)
+
+const App = () => 
   <div>
-    <Increase onIncrease={onIncrease}/>
-    <Display count={count}/>
+    <SmartIncrease/>
+    <SmartDisplay/>
   </div>
 
 const updateUI = () => {
   render(
-    <App 
-      count={store.getState().count} 
-      onIncrease={
-        () => store.dispatch(increase())
-      }/>, 
+    <Provider store={store}>
+      <App/>
+    </Provider>, 
     document.getElementById('root')
   )
 }
