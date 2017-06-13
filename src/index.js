@@ -9,6 +9,8 @@ const increase = () => ({ type: INC })
 
 const defaultState = { count: 0 }
 
+const selectCount = state => state.count
+
 const reducer = (state = defaultState, action) => 
   action.type === INC ? { count: state.count + 1 } : state  
 
@@ -25,7 +27,7 @@ const mapDispatchToIncreaseProps = dispatch => ({
 })
 
 const mapStateToDisplayProps = state => ({
-  count: state.count
+  count: selectCount(state)
 })
 
 const SmartIncrease = connect(null, mapDispatchToIncreaseProps)(Increase)
