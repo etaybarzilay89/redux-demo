@@ -8,7 +8,7 @@ export const createStore = reducer => {
     listeners.forEach(listener => listener())
   }
 
-  let state = reducer(undefined, initAction)
+  let state 
   let listeners = []
 
   const getState = () => state
@@ -25,5 +25,6 @@ export const createStore = reducer => {
     }
   }
 
+  dispatch(initAction)
   return { getState, dispatch, subscribe }
 }
