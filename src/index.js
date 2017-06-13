@@ -1,4 +1,6 @@
 import { createStore } from 'redux'
+import React from 'react'
+import { render } from 'react-dom'
 
 const INC = 'inc'
 
@@ -11,21 +13,29 @@ const reducer = (state = defaultState, action) =>
 
 const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
-const button = document.createElement('button')
-const display = document.createElement('div')
+const Increase = ({onIncrease}) => 
+  <button onClick={onIncrease}>Increase</button>
 
-document.body.appendChild(button)
-button.innerText = 'Increment'
+const Display = ({count}) => 
+  <div>{ count }</div>
 
-document.body.appendChild(display)
+const App = ({ count, onIncrease }) => 
+  <div>
+    <Increase onIncrease={onIncrease}/>
+    <Display count={count}/>
+  </div>
 
 const updateUI = () => {
-  display.innerText = store.getState().count  
+  render(
+    <App 
+      count={store.getState().count} 
+      onIncrease={
+        () => store.dispatch(increase())
+      }/>, 
+    document.getElementById('root')
+  )
 }
-store.subscribe(updateUI)
 
-button.addEventListener('click', () => {
-  store.dispatch(increase())
-})
+store.subscribe(updateUI)
 
 updateUI()
