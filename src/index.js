@@ -2,13 +2,18 @@ import { createStore, applyMiddleware } from 'redux'
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider, connect } from 'react-redux'
-import { pure } from 'recompose'
+import { compose, pure, withHandlers, onlyUpdateForKeys } from 'recompose'
 import { createSelector } from 'reselect'
 import { map, toPairs, delay } from 'lodash/fp'
 import thunk from 'redux-thunk'
 
+const renderLog = Component => props => {
+  console.log(`Rendering ${Component.displayName} with props: ${JSON.stringify(props)}`)
+  return <Component {...props}/>
+}
+
 const remoteCounter = count => new Promise(resolve => {
-  delay(1000, () => {
+  delay(100, () => {
     resolve(count + 1)
   })
 })
@@ -57,19 +62,35 @@ const Display = pure(({count}) =>
   <div>{ count }</div>
 )
 
-const Counters = pure(({counts, onIncrease}) => {
-  return <div>
+const Counter = 
+  (props) => {
+    const {count, onIncrease} = props
+    console.log(props)
+    return <div>
+      <Increase onIncrease={onIncrease}/>
+      <Display count={count}/>
+    </div>
+  }
+
+Counter.displayName = 'Counter'
+
+const EnhancedCounter = compose(
+  onlyUpdateForKeys(['count', 'onIncrease']),
+  renderLog
+)(Counter)
+
+const NamedCounter = withHandlers({
+  onIncrease: ({counterName, onIncrease}) => () => onIncrease(counterName)
+})(EnhancedCounter)
+
+const Counters = pure(({counts, onIncrease}) => 
+  <div>
     {
-      map(({name, count}) => {
-        return <div key={name}>
-          <Increase onIncrease={() => onIncrease(name)}/>
-          <Display count={count}/>
-        </div>
-      }, 
-      counts)
+      map(({name, count}) => 
+        <NamedCounter key={name} counterName={name} onIncrease={onIncrease} count={count}/>, 
+        counts)
     }
   </div>
-}
 )
 
 const mapStateToProps = state => ({
@@ -87,7 +108,6 @@ const App = () =>
     <button onClick={() => store.dispatch(someAction())}>Some Action</button>
     <SmartCounters/>
   </div>
-
 
 render(
   <Provider store={store}>
