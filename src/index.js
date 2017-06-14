@@ -69,8 +69,7 @@ const Counters = pure(({counts, onIncrease}) => {
       counts)
     }
   </div>
-}
-)
+})
 
 const mapStateToProps = state => ({
   counts: selectCounters(state)
