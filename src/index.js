@@ -46,6 +46,4 @@ const updateUI = () => {
   )
 }
 
-store.subscribe(updateUI)
-
 updateUI()
