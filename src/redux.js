@@ -3,13 +3,13 @@ const initAction = {
 }
 
 export const createStore = reducer => {
-  
-  const notifyListeners = () => {
-    listeners.forEach(listener => listener())
-  }
 
   let state = reducer(undefined, initAction)
   let listeners = []
+
+  const notifyListeners = () => {
+    listeners.forEach(listener => listener())
+  }
 
   const getState = () => state
 
