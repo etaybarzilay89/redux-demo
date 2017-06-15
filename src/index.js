@@ -54,6 +54,7 @@ const reducer = (state = defaultState, action) => {
   }
 }
 
+/*****   NEW   *****/
 const store = createStore(reducer, applyMiddleware(thunk))
 
 const Increase = ({onIncrease}) => 
