@@ -21,7 +21,7 @@ export const createStore = reducer => {
   const subscribe = listener => {
     listeners.add(listener)
     return () => {
-      listeners = listeners.delete(listener)
+      listeners.delete(listener)
     }
   }
 
