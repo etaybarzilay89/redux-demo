@@ -87,6 +87,7 @@ const Counters = pure(({counts, onIncrease}) =>
   <div>
     {
       map(({name, count}) => 
+        /*****   NEW   *****/
         <NamedCounter key={name} counterName={name} onIncrease={onIncrease} count={count}/>, 
         counts)
     }
