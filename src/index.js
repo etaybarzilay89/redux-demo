@@ -5,23 +5,28 @@ import { Provider, connect } from 'react-redux'
 import { pure } from 'recompose'
 import { createSelector } from 'reselect'
 import { map, toPairs, delay } from 'lodash/fp'
+/*****   NEW   *****/
 import thunk from 'redux-thunk'
 
-const remoteCounter = count => new Promise(resolve => {
+/*****   NEW   *****/
+const remoteIncrease = count => new Promise(resolve => {
   delay(1000, () => {
     resolve(count + 1)
   })
 })
 
+/*****   NEW   *****/
 const SET = 'set'
 const SOME_ACTION = 'some-action'
 
+/*****   NEW   *****/
 const set = (counterName, counterValue) => ({ type: SET, counterName, counterValue })
 const someAction = () => ({type: SOME_ACTION})
 
+/*****   NEW   *****/
 const increase = counterName => (dispatch, getState) => {
   const currentCount = getState().counts[counterName]
-  remoteCounter(currentCount).then(newCount => {
+  remoteIncrease(currentCount).then(newCount => {
     dispatch(set(counterName, newCount))
   })
 }
@@ -37,6 +42,7 @@ const defaultState = {
   counts: {a: 0, b: 0, c: 0} 
 }
 
+/*****   NEW   *****/
 const reducer = (state = defaultState, action) => {
   switch(action.type){
     case SET: 
