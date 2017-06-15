@@ -1,6 +1,7 @@
 import { createStore } from 'redux'
 import React from 'react'
 import { render } from 'react-dom'
+// *****   NEW   ***** //
 import { Provider, connect } from 'react-redux'
 
 const INC = 'inc'
@@ -20,6 +21,7 @@ const Increase = ({onIncrease}) =>
 const Display = ({count}) => 
   <div>{ count }</div>
 
+// *****   NEW   ***** //
 const mapDispatchToIncreaseProps = dispatch => ({
   onIncrease: () => dispatch(increase())
 })
@@ -33,6 +35,7 @@ const SmartDisplay = connect(mapStateToDisplayProps)(Display)
 
 const App = () => 
   <div>
+    {/* *****   NEW   ***** */}
     <SmartIncrease/>
     <SmartDisplay/>
   </div>
