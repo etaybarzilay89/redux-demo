@@ -9,7 +9,7 @@ export const createStore = reducer => {
   }
 
   let state = reducer(undefined, initAction)
-  let listeners = []
+  let listeners = new Set()
 
   const getState = () => state
 
@@ -19,9 +19,9 @@ export const createStore = reducer => {
   }
 
   const subscribe = listener => {
-    listeners = [...listeners, listener]
+    listeners.add(listener)
     return () => {
-      listeners = listeners.filter(l => l !== listener)
+      listeners = listeners.delete(listener)
     }
   }
 
