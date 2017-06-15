@@ -3,7 +3,6 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Provider, connect } from 'react-redux'
 import { pure } from 'recompose'
-import { createSelector } from 'reselect'
 import { map, toPairs } from 'lodash/fp'
 
 const INC = 'inc'
@@ -12,13 +11,7 @@ const SOME_ACTION = 'some-action'
 const increase = counterName => ({ type: INC, counterName })
 const someAction = () => ({type: SOME_ACTION})
 
-const selectCounts = state => state.counts
-
 const selectCounters = state => map(([name, count]) => ({name, count}), toPairs(state.counts))
-// const selectCounters = createSelector(
-//   selectCounts,
-//   counts => map(([name, count]) => ({name, count}), toPairs(counts))
-// )
 
 const defaultState = {
   someState: 0,
@@ -30,7 +23,6 @@ const reducer = (state = defaultState, action) => {
     case INC: 
       return {...state, counts: {...state.counts, [action.counterName]: state.counts[action.counterName] + 1}}
     case SOME_ACTION:
-      console.log('some action')
       return {...state, someState: state.someState + 1 }
     default:
       return state
@@ -47,7 +39,7 @@ const Display = pure(({count}) =>
 )
 
 const Counters = pure(({counts, onIncrease}) => {
-  console.log(counts)
+  console.log('Rendering Counters')
   return <div>
     {
       map(({name, count}) => {
