@@ -9,6 +9,7 @@ const increase = () => ({ type: INC })
 
 const defaultState = { count: 0 }
 
+// *****   NEW   ***** //
 const selectCount = state => state.count
 
 const reducer = (state = defaultState, action) => 
@@ -27,6 +28,7 @@ const mapDispatchToIncreaseProps = dispatch => ({
 })
 
 const mapStateToDisplayProps = state => ({
+  // *****   NEW   ***** //
   count: selectCount(state)
 })
 
@@ -39,15 +41,9 @@ const App = () =>
     <SmartDisplay/>
   </div>
 
-const updateUI = () => {
-  render(
-    <Provider store={store}>
-      <App/>
-    </Provider>, 
-    document.getElementById('root')
-  )
-}
-
-store.subscribe(updateUI)
-
-updateUI()
+render(
+  <Provider store={store}>
+    <App/>
+  </Provider>, 
+  document.getElementById('root')
+)
