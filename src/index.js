@@ -2,11 +2,13 @@ import { createStore, applyMiddleware } from 'redux'
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider, connect } from 'react-redux'
+/*****   NEW   *****/
 import { compose, pure, withHandlers, onlyUpdateForKeys } from 'recompose'
 import { createSelector } from 'reselect'
 import { map, toPairs, delay } from 'lodash/fp'
 import thunk from 'redux-thunk'
 
+/*****   NEW   *****/
 const renderLog = Component => props => {
   console.log(`Rendering ${Component.displayName} with props: ${JSON.stringify(props)}`)
   return <Component {...props}/>
@@ -58,27 +60,25 @@ const store = createStore(reducer, applyMiddleware(thunk))
 const Increase = ({onIncrease}) => 
   <button onClick={onIncrease}>Increase</button>
 
-const Display = pure(({count}) => 
-  <div>{ count }</div>
+const Display = pure(
+  ({count}) => <div>{ count }</div>
 )
 
-const Counter = 
-  (props) => {
-    const {count, onIncrease} = props
-    console.log(props)
-    return <div>
-      <Increase onIncrease={onIncrease}/>
-      <Display count={count}/>
-    </div>
-  }
+const Counter = ({count, onIncrease}) => 
+  <div>
+    <Increase onIncrease={onIncrease}/>
+    <Display count={count}/>
+  </div>
 
 Counter.displayName = 'Counter'
 
+/*****   NEW   *****/
 const EnhancedCounter = compose(
   onlyUpdateForKeys(['count', 'onIncrease']),
   renderLog
 )(Counter)
 
+/*****   NEW   *****/
 const NamedCounter = withHandlers({
   onIncrease: ({counterName, onIncrease}) => () => onIncrease(counterName)
 })(EnhancedCounter)
