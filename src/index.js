@@ -13,6 +13,7 @@ const reducer = (state = defaultState, action) =>
 
 const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
+// *****   NEW   ***** //
 const Increase = ({onIncrease}) => 
   <button onClick={onIncrease}>Increase</button>
 
