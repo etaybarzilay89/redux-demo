@@ -37,13 +37,9 @@ const App = () =>
     <SmartDisplay/>
   </div>
 
-const updateUI = () => {
-  render(
-    <Provider store={store}>
-      <App/>
-    </Provider>, 
-    document.getElementById('root')
-  )
-}
-
-updateUI()
+render(
+  <Provider store={store}>
+    <App/>
+  </Provider>, 
+  document.getElementById('root')
+)
