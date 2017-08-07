@@ -94,7 +94,6 @@ const App = () =>
     <SmartCounters/>
   </div>
 
-
 render(
   <Provider store={store}>
     <App/>
