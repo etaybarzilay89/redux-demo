@@ -47,7 +47,6 @@ const Display = pure(({count}) =>
 )
 
 const Counters = pure(({counts, onIncrease}) => {
-  /*****   NEW   *****/
   console.log('Rendering Counters')
   return <div>
     {
@@ -74,7 +73,6 @@ const SmartCounters = connect(mapStateToProps, mapDispatchToProps)(Counters)
 
 const App = () => 
   <div>
-    {/*****   NEW   *****/}
     <button onClick={() => store.dispatch(someAction())}>Some Action</button>
     <SmartCounters/>
   </div>
